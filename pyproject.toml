@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "algorithms-demonstrator"
+version = "0.1.0"
+description = "Web-site which can demonstrate the work of any algorythms."
+authors = ["Svyatoslav <hedgehogdevelop@gmail.com>"]
+readme = "README.md"
+packages = [{include = "algorithms_demonstrator"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.104.1"
+uvicorn = "^0.24.0.post1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
