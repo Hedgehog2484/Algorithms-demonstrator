@@ -57,6 +57,6 @@ def setup_handlers(app: FastAPI) -> None:
     :param app: главный объект FastAPI.
     :return: None.
     """
-    app.post("/magma/encrypt")(encrypt_magma)
-    app.post("/aes/encrypt")(encrypt_aes)
-    app.post("/rsa/encrypt")(encrypt_rsa)
+    app.router.post("/magma/encrypt")(encrypt_magma)
+    app.router.post("/aes/encrypt")(encrypt_aes)
+    app.router.post("/rsa/encrypt")(encrypt_rsa)
