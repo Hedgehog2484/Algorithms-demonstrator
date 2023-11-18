@@ -9,10 +9,10 @@ from algorythms import MagmaReplacement, RSA, AES
 async def encrypt_magma(payload: Dict[str, Any]) -> str:
     """
     Шифрование переданных данных с помощью алгоритма `Магма`.
-    :param payload: Исходные данные (ключ, s-box, исходный текст).
+    :param payload: Исходные данные (ключ, исходный текст).
     :return: Строка формата JSON.
     """
-    magma = MagmaReplacement(payload["cipher_key"], payload["sbox"])
+    magma = MagmaReplacement(payload["cipher_key"])
     blocks = magma.get_64bit_blocks(payload["open_text"].encode("utf-8"))
     result = []
     for block in blocks:
