@@ -33,14 +33,8 @@ async def encrypt_aes(payload: Dict[str, Any]) -> str:
     :return: Строка формата JSON.
     """
     aes = AES(payload["cipher_key"])
-    cipher_blocks = aes.encrypt(payload["cipher_key"], payload["sbox"])
-
-    # result = []
-    # for block in blocks:
-    #     r = aes.encrypt(int.from_bytes(block, byteorder="big"))
-    #     result[0] += r[0]
-    #     result[1] += r[1]
-
+    cipher_blocks = aes.encrypt(payload["cipher_key"], payload["plaintext"])
+    
     return json.dumps({
         "round_keys": aes.round_keys,
         "sub_bytes": aes.sub_bytes,
