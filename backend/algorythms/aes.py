@@ -122,8 +122,16 @@ def split_blocks(message, block_size=16, require_padding=True):
 
 class AES:
     rounds_by_key_size = {16: 10, 24: 12, 32: 14}
+    round_keys = []
+    sub_bytes = []
+    shift_rows = []
+    mix_columns = []
 
     def __init__(self, master_key):
+        master_key = master_key[:16]
+        if isinstance(master_key, str):
+            master_key = master_key.encode('utf-8')
+
         assert len(master_key) in AES.rounds_by_key_size
         self.n_rounds = AES.rounds_by_key_size[len(master_key)]
         self._key_matrices = self._expand_key(master_key)
@@ -185,22 +193,21 @@ class AES:
 
         for plaintext_block in split_blocks(plaintext):
             block = self.encrypt_block(plaintext_block)
-            blocks.append(block)
+            blocks.append(str(block))
 
         return blocks
+    
+    def encrypt(self, key, plaintext):
+            if isinstance(key, str):
+                key = key.encode('utf-8')
+            if isinstance(plaintext, str):
+                plaintext = plaintext.encode('utf-8')
+
+            ciphertext = AES(key).encrypt_cbc(plaintext)
+
+            return ciphertext
 
 
 AES_KEY_SIZE = 16
 HMAC_KEY_SIZE = 16
 IV_SIZE = 16
-
-
-def encrypt(key, plaintext):
-    if isinstance(key, str):
-        key = key.encode('utf-8')
-    if isinstance(plaintext, str):
-        plaintext = plaintext.encode('utf-8')
-
-    ciphertext = AES(key).encrypt_cbc(plaintext)
-
-    return ciphertext
